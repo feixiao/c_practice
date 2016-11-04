@@ -63,7 +63,7 @@ template<typename T>
 void push_data(threadsafe_stack<T>& stack,int cnt) {
         for(int i = 0; i < cnt; i++) {
             stack.push(i);
-            std::this_thread::sleep_for(std::chrono::milliseconds(20)); // push慢一点
+            std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
         }
 }
 
@@ -73,7 +73,7 @@ void pop_data(threadsafe_stack<T>& stack,int cnt) {
             try{
                 int value = 0;
                 stack.pop(value);
-                std::this_thread::sleep_for(std::chrono::milliseconds(20)); // pop快一点
+                std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
             }catch(std::exception& ex) {
                 std::cout << ex.what() << std::endl;
             }
