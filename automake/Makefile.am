@@ -1,0 +1,3 @@
+AUTOMARK_OPTIONS=foreign
+noinst_PROGRAMS=HelloWorld
+HelloWorld_SOURCES=helloworld.cpp
