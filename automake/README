@@ -1,0 +1,20 @@
+## 如何运行
+
+### 运行autoscan命令
+
+### 将configure.scan文件重命名为configure.ac，并按照需要修改configure.ac文件
+
+### 执行aclocal命令
+
+### 执行autoheader命令
+
+### 执行autoconf命令
+
+### 在Project目录下新建Makefile.am文件，并编写Makefile.am
+
+### 运行automake命令
+
+### 执行configure生成Makefile
+
+## 参考资料
++ [《使用autoconf和automake生成Makefile文件》](http://www.jellythink.com/archives/1056)
