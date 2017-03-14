@@ -23,6 +23,7 @@ public:
         if(&lhs == &rhs) {
             return;
         }
+        // std::defer_lock表示互斥量没有上锁
         std::unique_lock<std::mutex> lock_a(lhs.m,std::defer_lock);
         std::unique_lock<std::mutex> lock_b(rhs.m,std::defer_lock);
          // std::lock可以一次性锁住多个(两个以上)的互斥量，并且没有副作用(死锁风险),避免多个锁上锁不一致引起的死锁问题
