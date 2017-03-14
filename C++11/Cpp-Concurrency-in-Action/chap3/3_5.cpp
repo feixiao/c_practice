@@ -17,7 +17,7 @@ template<typename T>
 class threadsafe_stack {
 private:
     std::stack<T> data;
-    mutable std::mutex m;
+    mutable std::mutex m;  // mutable为了突破const的限制而设置的。被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中。
 public:
     threadsafe_stack():data(std::stack<T>()){}
     threadsafe_stack(const threadsafe_stack& other) {
