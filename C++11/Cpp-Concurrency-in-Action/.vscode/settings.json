@@ -20,6 +20,7 @@
         "mutex": "cpp",
         "thread": "cpp",
         "array": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "system_error": "cpp"
     }
 }
