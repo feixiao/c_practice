@@ -1,0 +1,25 @@
+{
+    "files.associations": {
+        "condition_variable": "cpp",
+        "iostream": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cstdarg": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "exception": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "atomic": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp",
+        "array": "cpp",
+        "future": "cpp"
+    }
+}
