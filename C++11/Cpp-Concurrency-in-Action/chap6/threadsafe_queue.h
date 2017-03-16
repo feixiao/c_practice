@@ -39,7 +39,7 @@ public:
         m_queue.pop();
         return res;
      }
-     
+
      std::shared_ptr<T> try_pop() 
      {
         std::lock_guard<std::mutex> lk(m_mutex);
@@ -55,10 +55,15 @@ public:
             m_queue.pop();
             return res;
         }
-     
      }
+
+    bool empty() const
+    {
+        std::lock_guard<std::mutex> lk(m_mutex);
+        return m_queue.empty();
+    }
 private:
-    mutable std::mutex m_mutex;
+    mutable std::mutex m_mutex;   
     std::queue<T> m_queue;
     std::condition_variable m_cond;
 };
