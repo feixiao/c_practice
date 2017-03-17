@@ -53,6 +53,16 @@ public:
         return res;
      }
 
+     bool try_pop(T& value)
+     {
+        std::lock_guard<std::mutex> lk(m_mutex);
+        if(m_queue.empty())
+            return false;
+        value=std::move(*m_queue.front());
+        m_queue.pop();
+        return true;
+     }
+
      bool empty() const 
      {
         std::lock_guard<std::mutex> lk(m_mutex);
