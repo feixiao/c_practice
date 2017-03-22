@@ -21,6 +21,7 @@
         "thread": "cpp",
         "array": "cpp",
         "future": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "functional": "cpp"
     }
 }

@@ -28,7 +28,7 @@ public:
         {   
             for(unsigned i=0;i<thread_count;++i)
             {
-                threads.push_back(std::thread(&thread_pool::worker_thread,this)); // 9
+                threads.push_back(std::thread(&thread_pool::worker_thread,this)); // 启动thread_count个线程执行worker_thread函数，等待获取task并执行
             }
         }
         catch(std::exception & ex)
