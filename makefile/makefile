@@ -13,10 +13,13 @@ STRIP = strip
 # 头文件路径
 CFLAGS += -I../redis-3.0-network/inc
 
+# 第三方库
+EXTLIBS = 
+
 # 编译选项
 CFLAGS += -Wall -O2 -Os -g
 
-LDFLAGS += "-wl" -lc 
+LDFLAGS +=  -lc 
  
 AFLAGS += -r
 
@@ -29,16 +32,29 @@ SOURCE += $(SRCPATH)/anet.c
 SOURCE += $(SRCPATH)/ae.c
 SOURCE += $(SRCPATH)/ae_epoll.c
 
+SRC += $(SOURCE)
+SRC += ../redis-3.0-network/example/timer/main.c
+
 LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
+
+EXE_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRC)))
 
 LIB_TARGET = ./libnet.a
 
+TARGET = ./test
 
-all:$(LIB_TARGET)
+all:$(LIB_TARGET) $(TARGET)
+
+lib:$(LIB_TARGET)
 
 $(LIB_TARGET):$(LIB_OBJS)
 	$(RM) $@;
 	$(AR) $(AFLAGS) $@ $^
+
+exe:$(TARGET)
+
+$(TARGET):$(EXE_OBJS) $(EXTLIBS)
+	$(CPP) -o $@ $^  $(LDFLAGS)
 
 .c.o:
 	$(CC) -c $(CFLAGS) $^ -o $@
@@ -47,4 +63,4 @@ $(LIB_TARGET):$(LIB_OBJS)
 	$(CPP) -c $(CFLAGS) $^ -o $@
 
 clean:
-	$(RM) $(LIB_TARGET) $(LIB_OBJS)
+	$(RM) $(LIB_TARGET) $(LIB_OBJS) $(TARGET) $(EXE_OBJS)
