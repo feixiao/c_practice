@@ -8,27 +8,18 @@
 #include <unistd.h>
 
 
-// gcc -Wall ipc.c -o ipc 
+// gcc -Wall pid.c -o pid
 // 需要root权限执行才能生效
 
 /*
-  1：创建message queue
-  ipcmk -Q
-    输出： 消息队列 id：0
+    1: 输出shell的pid 
+         echo $$  // 14005
 
-  2：查看已经开启的message queue
-  ipcs -q
-    输出：
-        --------- 消息队列 -----------
-        键        msqid      拥有者  权限     已用字节数 消息
-        0x16a93c26 0          frank      644        0            0
- 
-  3: 执行ipc程序，然后执行ipcs -q，我们发现之前的message queue不见了
+    2：执行程序 ./pid
 
-  4：exit 退出
-
-  5：ipcs -q,查看已经开启的message queue
- 
+    3: 输出shell的pid 
+         echo $$  // 1
+         
 */
 #define STACK_SIZE (1024*1024)
 
@@ -48,7 +39,7 @@ int child_main(void* args){
 int main(){
     printf("Main Start!\n");
     int child_fd = clone(child_main,child_stack+STACK_SIZE,
-                       CLONE_NEWIPC | CLONE_NEWUTS | SIGCHLD,NULL);
+                         CLONE_NEWPID | CLONE_NEWIPC | CLONE_NEWUTS | SIGCHLD,NULL);
     waitpid(child_fd,NULL,0);
     printf("Main End!\n");
     return 0;
