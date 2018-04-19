@@ -32,7 +32,8 @@
  *
  * Build:
  *   gcc -o simple-example simple-example.c `pkg-config --cflags --libs nice`
- *
+ * 
+ * 分别作为发送端和接收端启动示例，由（0，1）标识， 在启动示例时，输入STUN服务器地址
  * Run two clients, one controlling and one controlled:
  *   ./simple-example 0 $(host -4 -t A stun.stunprotocol.org | awk '{ print $4 }')
  *   ./simple-example 1 $(host -4 -t A stun.stunprotocol.org | awk '{ print $4 }')
@@ -45,6 +46,9 @@
 #include <agent.h>
 
 #include <gio/gnetworking.h>
+
+
+// WebRtc音视频实时通信--libnice库介绍 https://blog.csdn.net/chenFteng/article/details/77429453
 
 static GMainLoop *gloop;
 static GIOChannel* io_stdin;
@@ -77,12 +81,13 @@ static gboolean stdin_send_data_cb (GIOChannel *source, GIOCondition cond,
 int
 main(int argc, char *argv[])
 {
+  // 创建一个Libnice Agent实例对象，一个agent可理解为一个连接通道
   NiceAgent *agent;
-  gchar *stun_addr = NULL;
-  guint stun_port = 0;
+  gchar *stun_addr = NULL;  // STUN服务器地址
+  guint stun_port = 0;      // STUN服务器端口
   gboolean controlling;
 
-  // Parse arguments
+  // 解析输入参数以获取STUN服务器地址信息和当前端角色（控制或被控制）
   if (argc > 4 || argc < 2 || argv[1][1] != '\0') {
     fprintf(stderr, "Usage: %s 0|1 stun_addr [stun_port]\n", argv[0]);
     return EXIT_FAILURE;
@@ -112,7 +117,7 @@ main(int argc, char *argv[])
   io_stdin = g_io_channel_unix_new(fileno(stdin));
 #endif
 
-  // Create the nice agent
+  // 创建一个连接对象，并指定所遵循的ICE协议
   agent = nice_agent_new(g_main_loop_get_context (gloop),
       NICE_COMPATIBILITY_RFC5245);
   if (agent == NULL)
@@ -126,10 +131,16 @@ main(int argc, char *argv[])
   g_object_set(agent, "controlling-mode", controlling, NULL);
 
   // Connect to the signals
+  // 为agent绑定事件响应，本端候选地址全部收集完成时调用方法cb_candidate_gathering_done
   g_signal_connect(agent, "candidate-gathering-done",
       G_CALLBACK(cb_candidate_gathering_done), NULL);
+  // 为agent绑定事件响应，本端在接收到对端的连接候选地址，在尝试连接后，
+  // 发现一个新的可通信的连接地址对时，调用方法cb_new_selected_pair
+  // 一个可选地址对由本端一个候选地址和对端的一个候选地址组成
   g_signal_connect(agent, "new-selected-pair",
       G_CALLBACK(cb_new_selected_pair), NULL);
+  // 为agent绑定事件响应，当通道的连接状态发生变化时回调方法cb_component_state_changed
+  // 一个agent可包含多个component，可视为多路复用一个链路
   g_signal_connect(agent, "component-state-changed",
       G_CALLBACK(cb_component_state_changed), NULL);
 
@@ -140,6 +151,7 @@ main(int argc, char *argv[])
 
   // Attach to the component to receive the data
   // Without this call, candidates cannot be gathered
+  // 为agent绑定事件响应，当agent链路的1号通道（component）接口有数据包到来时
   nice_agent_attach_recv(agent, stream_id, 1,
       g_main_loop_get_context (gloop), cb_nice_recv, NULL);
 
@@ -285,6 +297,9 @@ cb_nice_recv(NiceAgent *agent, guint _stream_id, guint component_id,
   fflush(stdout);
 }
 
+
+// 解析收集到的自已的或接收到的对方的candidate候选地址.
+// 一个候选地址主要由编号，优先级,IP地址，端口号，网络类型等几个元素组成
 static NiceCandidate *
 parse_candidate(char *scand, guint _stream_id)
 {
