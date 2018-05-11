@@ -6,6 +6,7 @@ all:
 	$(CC) ${CFLAGS}  loop.c -o loop ${LDFLAGS}
 	$(CC) ${CFLAGS}  ulti.c -o ulti ${LDFLAGS}
 	$(CC) ${CFLAGS}  memchunk.c -o memchunk ${LDFLAGS}
+	$(CC) ${CFLAGS}  context.c -o context ${LDFLAGS}
 
 clean:
-	rm -f loop ulti memchunk
+	rm -f loop ulti memchunk context
