@@ -13,6 +13,8 @@ sudo apt-get install libglib2.0-dev
 
 [《浅析GLib》](https://www.ibm.com/developerworks/cn/linux/l-glib/)  入门使用资料。
 
+[《g_main_loop理解》 ](https://blog.csdn.net/fingding/article/details/6869407)
+
 ### 参考资料
 
 + [官网](https://developer.gnome.org/glib/)
@@ -20,3 +22,4 @@ sudo apt-get install libglib2.0-dev
 + [glib概况](https://developer.gnome.org/glib/unstable/)
 + [源码获取](http://ftp.gnome.org/pub/gnome/sources/glib)
 
+  
