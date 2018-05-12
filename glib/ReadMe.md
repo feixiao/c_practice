@@ -1,5 +1,18 @@
 ## glib快速入门
 
+### 安装
+
+```shell
+sudo apt-get install libmount-dev
+sudo apt-get install libglib2.0-dev
+```
+
+编译安装
+
++ [源码安装glib](https://blog.csdn.net/chilv/article/details/79078948)
+
+[《浅析GLib》](https://www.ibm.com/developerworks/cn/linux/l-glib/)  入门使用资料。
+
 ### 参考资料
 
 + [官网](https://developer.gnome.org/glib/)
