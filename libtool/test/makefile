@@ -5,12 +5,12 @@ BINDIR=/usr/local/bin
 
 all : hello
  
-install : libhello.la hello
-	libtool --mode=install install -c libhello.la ${LIBDIR}/libhello.la
+install : hello
+	libtool --mode=install install -c libfoo.la ${LIBDIR}/libfoo.la
 	libtool --mode=install cp hello ${BINDIR}/hello
  
-uninstall : ${LIBDIR}/libhello.la ${BINDIR}/hello
-	libtool --mode=uninstall /bin/rm ${LIBDIR}/libhello.la
+uninstall : ${LIBDIR}/libfoo.la ${BINDIR}/hello
+	libtool --mode=uninstall /bin/rm ${LIBDIR}/libfoo.la
 	libtool --mode=uninstall /bin/rm ${BINDIR}/hello
  
 hello : libfoo.la hello.lo	
