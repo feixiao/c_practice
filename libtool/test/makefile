@@ -13,12 +13,11 @@ uninstall : ${LIBDIR}/libhello.la ${BINDIR}/hello
 	libtool --mode=uninstall /bin/rm ${LIBDIR}/libhello.la
 	libtool --mode=uninstall /bin/rm ${BINDIR}/hello
  
-hello : libhello.la hello.o	
-	libtool --mode=link gcc -g -O -o hello hello.lo -rpath ${LIBDIR} libhello.la
+hello : libfoo.la hello.lo	
+	libtool --mode=link gcc -g -O -o hello hello.lo -rpath ${LIBDIR} libfoo.la
 
-libhello.la : $(LO_OBJS)
-#	libtool --mode=link --tag=CC gcc -g -O -o libhello.la -rpath ${LIBDIR} ${PACKAGE_VERSION}  $(LO_OBJS)
-	libtool --mode=link --tag=CC gcc -g -O -o libhello.la -rpath /usr/local/lib foo.lo
+libfoo.la : $(LO_OBJS)
+	libtool --mode=link --tag=CC gcc -g -O -o libfoo.la -rpath ${LIBDIR} $(LO_OBJS)
 
 foo.lo : foo.c
 	libtool --mode=compile gcc -g -O -c foo.c

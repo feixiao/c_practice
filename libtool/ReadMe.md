@@ -25,7 +25,7 @@ libtool编译出两个版本的object，一个是fPIC(位置无关的),放在.li
 ##### 2：生成动态库
 
 ```shell
-libtool --mode=link --tag=CC gcc -g -O -o libhello.la -rpath /usr/local/lib foo.lo
+libtool --mode=link --tag=CC gcc -g -O -o libfoo.la -rpath /usr/local/lib foo.lo
 ```
 
 link出两个共享库，一个是static，一个则是dynamic；需要注意的是，-rpath必须有才能产生dynamic库来，如果用-static，则只创建static库。
@@ -43,7 +43,7 @@ libtool --mode=install install -c libhello.la /usr/local/lib/libhello.la
 ```shell
 # 参数 hello.O文件
 libtool --mode=compile gcc -g -O -c hello.c
-libtool --mode=link gcc -g -O -o hello hello.lo -rpath /usr/local/lib libhello.la
+libtool --mode=link gcc -g -O -o hello hello.lo -rpath /usr/local/lib libfoo.la
 ```
 
 ##### 5：安装可执行程序
