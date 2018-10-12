@@ -4,5 +4,5 @@ char msg[128]="Hello world";
 
 void print()
 {
-    printf("%s/n",msg);
+    printf("%s\n",msg);
 }
