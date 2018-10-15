@@ -72,3 +72,4 @@ libtool --mode=execute hello
 #### 参考资料
 
 + [《libtool简介》](https://blog.csdn.net/moonlightfall/article/details/60870600)
++ [《使用 GNU Libtool 创建库》](https://www.ibm.com/developerworks/cn/aix/library/1007_wuxh_libtool/index.html)
