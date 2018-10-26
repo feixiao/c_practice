@@ -21,10 +21,17 @@ LDFLAGS +=  -lpthread
 SRCPATH = .
 SOURCE += $(SRCPATH)/sample1.cc
 SOURCE += $(SRCPATH)/sample1_unittest.cc
+SOURCE += $(SRCPATH)/sample2.cc
+SOURCE += $(SRCPATH)/sample2_unittest.cc
+SOURCE += $(SRCPATH)/sample3_unittest.cc
+SOURCE += $(SRCPATH)/sample4.cc
+SOURCE += $(SRCPATH)/sample4_unittest.cc
+SOURCE += $(SRCPATH)/sample5_unittest.cc
+SOURCE += $(SRCPATH)/sample6_unittest.cc
 
 EXE_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 
-TARGET = ./sample1
+TARGET = ./test
 
 all:$(TARGET)
 
@@ -35,4 +42,4 @@ $(TARGET):$(EXE_OBJS) $(EXTLIBS)
 	$(CPP) -c $(CFLAGS) $^ -o $@
 
 clean:
-	$(RM) $(TARGET) $(EXE_OBJS)
+	$(RM) $(TARGET) 

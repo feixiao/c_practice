@@ -72,13 +72,15 @@ namespace {
 
 // Tests Factorial().
 
+//  第一个参数是测试用例的名称，第二个参数是测试用例中的测试名称。
+//  即 FactorialTest 为测试用例名称， Negativew为测试用例中的测试名称
 // Tests factorial of negative numbers.
 TEST(FactorialTest, Negative) {
   // This test is named "Negative", and belongs to the "FactorialTest"
   // test case.
-  EXPECT_EQ(1, Factorial(-5));
+  EXPECT_EQ(1, Factorial(-5));   // 期望 Factorial(-5) 返回的结果为 1
   EXPECT_EQ(1, Factorial(-1));
-  EXPECT_GT(Factorial(-10), 0);
+  EXPECT_GT(Factorial(-10), 0);  // 期望 Factorial(-10) 返回的结果大于 0 
 
   // <TechnicalDetails>
   //

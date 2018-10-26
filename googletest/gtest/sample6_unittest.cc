@@ -41,15 +41,17 @@ namespace {
 // implementations can be constructed the same way.
 
 template <class T>
-PrimeTable* CreatePrimeTable();
+PrimeTable* CreatePrimeTable();   // 函数模板
 
 template <>
 PrimeTable* CreatePrimeTable<OnTheFlyPrimeTable>() {
+  // 模板函数1 函数模板的特化 OnTheFlyPrimeTable是一个类
   return new OnTheFlyPrimeTable;
 }
 
 template <>
 PrimeTable* CreatePrimeTable<PreCalculatedPrimeTable>() {
+  //  模板函数2 函数模板的特化 PreCalculatedPrimeTable也是一个类
   return new PreCalculatedPrimeTable(10000);
 }
 
@@ -57,8 +59,9 @@ PrimeTable* CreatePrimeTable<PreCalculatedPrimeTable>() {
 template <class T>
 class PrimeTableTest : public testing::Test {
  protected:
-  // The ctor calls the factory function to create a prime table
-  // implemented by T.
+  // The ctor calls the factory function to create a prime table implemented by T.
+  // 当定义PrimeTableTest对象的时候,T会被给定为OnTheFlyPrimeTable或者PreCalculatedPrimeTable类型,所以可以
+  // 根据上面的函数模板的偏特化进行选择编译
   PrimeTableTest() : table_(CreatePrimeTable<T>()) {}
 
   virtual ~PrimeTableTest() { delete table_; }
@@ -89,7 +92,12 @@ using testing::Types;
 // to declare it and specify the type parameters.  As with TEST_F,
 // TestCaseName must match the test fixture name.
 
+
+// 如果在写测试代码的时候已经知道了需要测试的所有实现接口子类的名称: 
+// 使用testing::Types<>指定子类列表和使用TYPED_TEST_CASE和TYPE_TEST书写test case和其中的test.
+
 // The list of types we want to test.
+// 需要测试的所有实现接口子类列表
 typedef Types<OnTheFlyPrimeTable, PreCalculatedPrimeTable> Implementations;
 
 TYPED_TEST_CASE(PrimeTableTest, Implementations);
@@ -137,6 +145,10 @@ TYPED_TEST(PrimeTableTest, CanGetNextPrime) {
 #endif  // GTEST_HAS_TYPED_TEST
 
 #if GTEST_HAS_TYPED_TEST_P
+
+
+// 如果在写测试代码的时候并不知道需要测试的所有实现接口子类的名称:
+// 使用TYPED_TEST_CASE_P和TYPED_TEST_P书写test case和其中的test.
 
 using testing::Types;
 
@@ -216,6 +228,7 @@ REGISTER_TYPED_TEST_CASE_P(
 // defined at the time we write the TYPED_TEST_P()s.
 typedef Types<OnTheFlyPrimeTable, PreCalculatedPrimeTable>
     PrimeTableImplementations;
+    
 INSTANTIATE_TYPED_TEST_CASE_P(OnTheFlyAndPreCalculated,    // Instance name
                               PrimeTableTest2,             // Test case name
                               PrimeTableImplementations);  // Type list

@@ -48,12 +48,13 @@ using ::testing::Values;
 // instead of reusing them.  In this sample we will define a simple factory
 // function for PrimeTable objects.  We will instantiate objects in test's
 // SetUp() method and delete them in TearDown() method.
-typedef PrimeTable* CreatePrimeTableFunc();
+typedef PrimeTable* CreatePrimeTableFunc();   // 函数类型
 
 PrimeTable* CreateOnTheFlyPrimeTable() {
   return new OnTheFlyPrimeTable();
 }
 
+// 模板指定非类型普通参数
 template <size_t max_precalculated>
 PrimeTable* CreatePreCalculatedPrimeTable() {
   return new PreCalculatedPrimeTable(max_precalculated);
@@ -63,6 +64,7 @@ PrimeTable* CreatePreCalculatedPrimeTable() {
 // can refer to the test parameter by GetParam().  In this case, the test
 // parameter is a factory function which we call in fixture's SetUp() to
 // create and store an instance of PrimeTable.
+// TestWithParam是一个类模板,给定的类型是函数指针类型
 class PrimeTableTestSmpl7 : public TestWithParam<CreatePrimeTableFunc*> {
  public:
   virtual ~PrimeTableTestSmpl7() { delete table_; }
@@ -110,6 +112,7 @@ TEST_P(PrimeTableTestSmpl7, CanGetNextPrime) {
 //
 // Here, we instantiate our tests with a list of two PrimeTable object
 // factory functions:
+// 实例化具有任何您想要的参数的测试用例。
 INSTANTIATE_TEST_CASE_P(OnTheFlyAndPreCalculated, PrimeTableTestSmpl7,
                         Values(&CreateOnTheFlyPrimeTable,
                                &CreatePreCalculatedPrimeTable<1000>));
