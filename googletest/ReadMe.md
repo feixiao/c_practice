@@ -6,11 +6,11 @@
 
   [《Getting started》](https://github.com/google/googletest/blob/master/googletest/docs/primer.md) 中文翻译《[GTest框架简介（译文）](https://www.cnblogs.com/jycboy/p/6057677.html)》
 
-+ **Google Mock**
++ **Google Mock：模拟外部依赖项**
+  + [Google Mock简介--概念及基础语法](https://www.cnblogs.com/jycboy/p/gmock_summary.html)
+  + [《GMock的CheatSheet文档》](https://www.cnblogs.com/jycboy/p/gmock_cheatsheet.html) CheatSheet文档中包含了GMock所有常用的东西
+  + [《Google Mock documentation》](https://github.com/google/googletest/blob/master/googlemock/README.md)
 
-   [《Google Mock documentation》](https://github.com/google/googletest/blob/master/googlemock/README.md)
-
-   [Google Mock简介--概念及基础语法](https://www.cnblogs.com/jycboy/p/gmock_summary.html)
 
 #### 安装
 ##### Linux
@@ -83,6 +83,8 @@ EXPECT_STREQ()用于c_string(以’\0’结尾的c风格字符串)的检查。 �
 Google测试提供了一个事件侦听器API，让您接收有关测试程序进度和测试失败的通知。 
 
 [Extending Google Test by Handling Test Events](https://www.cnblogs.com/jycboy/p/gtest_handlingEvent.html)
+
+#### gmock sample
 
 #### 参考资料
 

@@ -29,7 +29,7 @@ SOURCE += $(SRCPATH)/sample4_unittest.cc
 SOURCE += $(SRCPATH)/sample5_unittest.cc
 SOURCE += $(SRCPATH)/sample6_unittest.cc
 
-EXE_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
+EXE_OBJS = $(patsubst %.cc,%.o,$(SOURCE))
 
 TARGET = ./test
 
@@ -42,4 +42,4 @@ $(TARGET):$(EXE_OBJS) $(EXTLIBS)
 	$(CPP) -c $(CFLAGS) $^ -o $@
 
 clean:
-	$(RM) $(TARGET) 
+	$(RM) $(TARGET) $(EXE_OBJS)
