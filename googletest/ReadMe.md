@@ -66,13 +66,13 @@ EXPECT_STREQ()用于c_string(以’\0’结尾的c风格字符串)的检查。 �
 介绍如何测试不同子类(OnTheFlyPrimeTable和PreCalculatedPrimeTable)对基类的接口的实现。
 
 ##### sample7:
-介绍了利用参数化方法进行接口测试的方法。允许您使用不同的参数测试代码，而无需编写同一测试的多个副本。
+介绍了利用参数化方法进行接口测试的方法。允许您使用不同的参数测试代码，而无需编写同一测试的多个副本。主要思路是在fixture中可以通过继承自public TestWithParam来进行参数化测试,参数可以是函数接口或者基类指针等,在fixture中可以通过GetParam得到参数并进行具体的调用测试等. 
 
 [《值参数化测试》](https://www.cnblogs.com/jycboy/p/6118073.html)
 
 ##### sample8：
 
-介绍了提供参数的不同组合的方式。
+介绍了提供参数的不同组合的方式。sample7为单个参数，这边为多参数。
 
 ##### sample9：
 

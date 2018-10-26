@@ -112,7 +112,7 @@ TEST_P(PrimeTableTestSmpl7, CanGetNextPrime) {
 //
 // Here, we instantiate our tests with a list of two PrimeTable object
 // factory functions:
-// 实例化具有任何您想要的参数的测试用例。
+// 实例化具有任何您想要的参数的测试用例(第三个参数Values()中指定具体的参数)
 INSTANTIATE_TEST_CASE_P(OnTheFlyAndPreCalculated, PrimeTableTestSmpl7,
                         Values(&CreateOnTheFlyPrimeTable,
                                &CreatePreCalculatedPrimeTable<1000>));
