@@ -1,5 +1,13 @@
 ## CppCheck快速入门
 
+#### 安装和使用
+
+```shell
+sudo apt-get install cppcheck
+cppcheck -j 3 --enable=all ./ 
+
+```
+
 #### 参考资料
 
 + [CppCheck官网](http://cppcheck.net/)
