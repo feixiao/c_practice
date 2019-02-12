@@ -32,4 +32,5 @@ $(TARGET):$(EXE_OBJS)
 
 #### 参考资料
 
-+  [《静态链接库、动态链接库和动态加载库》](https://www.cnblogs.com/nufangrensheng/p/3578784.html) 		
++  [《静态链接库、动态链接库和动态加载库》](https://www.cnblogs.com/nufangrensheng/p/3578784.html)
++ [《MAKEFILES, BEST PRACTICES》](https://danyspin97.org/blog/makefiles-best-practices/)
