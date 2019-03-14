@@ -1,5 +1,11 @@
 # asan快速入门
 
+#### 安装
+##### CentOS
+```shell
+yum install devtoolset-4-libasan-devel
+```
+
 #### 使用
 
 添加编译选项
