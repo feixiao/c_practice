@@ -3,7 +3,7 @@
 #### 安装
 ##### CentOS
 ```shell
-yum install devtoolset-4-libasan-devel
+yum install devtoolset-4-libasan-devel devtoolset-4-libubsan-devel
 ```
 
 #### 使用
