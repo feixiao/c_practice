@@ -109,7 +109,10 @@ static void usage(const char* proc)
 int main(int argc, char* argv[])
 {
 	acl::acl_cpp_init();
+
+	
 	acl::log::stdout_open(true);  
+	acl::log::open("./test.log");
 	int ch;
 
 	// std::string test = "hello";
@@ -145,7 +148,7 @@ int main(int argc, char* argv[])
 	acl::socket_stream conn;
 	if (conn.open(addr, 30, 30) == false)
 	{
-		printf("connect %s error %s\r\n", addr.c_str(), acl::last_serror());
+		logger("connect %s error %s\r\n", addr.c_str(), acl::last_serror());
 		return false;
 	}
 
@@ -158,9 +161,9 @@ int main(int argc, char* argv[])
 
 	// read and write
 	if(strcmp(mode,"s")) {
-		printf("one threads....\n");
+		logger("one threads....\n");
 	}else {
-		printf("two threads....\n");
+		logger("two threads....\n");
 	}
 	
 	while (!gStop) {
@@ -183,7 +186,7 @@ int main(int argc, char* argv[])
 
 void myThread(acl::websocket* ws)
 {
-		printf("myThread run ...");
+		logger("myThread run ...");
     while(!gStop) {
 			send(*ws);
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
