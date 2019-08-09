@@ -87,6 +87,7 @@ func main() {
 
 	// The user handlers, requiring authentication
 	g.GET("/echo", handleEcho)
+	g.GET("/", handleRedirect)
 
 	go func() {
 		addr := ":8300"
@@ -120,8 +121,13 @@ func handleEcho(c *gin.Context) {
 	}
 	// websocket connect
 	client := &Client{ID: uuid.NewV4().String(), Socket: conn, Send: make(chan []byte)}
-
+	log.Println("header : ", c.Request.Header)
 	Manager.Register <- client
 
 	go client.Read()
+}
+
+
+func handleRedirect(c *gin.Context) { 
+		http.Redirect(c.Writer, c.Request, "http://localhost:8300/echo", http.StatusMovedPermanently)
 }
