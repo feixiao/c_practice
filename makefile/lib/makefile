@@ -6,11 +6,15 @@ AR = ar
 RM = rm -f
 STRIP = strip
 
-# 头文件路径
-CFLAGS += -I ../src
+OSNAME    = $(shell uname -s)
+OSTYPE    = $(shell uname -m)
 
-# 第三方库
-EXTLIBS = -L./ -lfunc
+RPATH =
+
+# 头文件路径
+CFLAGS += -I ./
+CFLAGS += -I ../
+CFLAGS += -I ../../input/inc/zookeeper
 
 # 编译选项
 CFLAGS += -Wall -O2 -Os -g
@@ -22,19 +26,35 @@ LDFLAGS +=  -lc
 AFLAGS += -r
 
 # 需要编译的文件（静态库）
-SRCPATH = ../src
-SOURCE += $(SRCPATH)/func.cpp
+SRCPATH = .
+SOURCE += $(SRCPATH)/service.cpp
 LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 
-# 需要编译的文件（可执行程序）
-SRC += $(SRCPATH)/main.cpp
-EXE_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRC)))
 
-LIB_TARGET = ./libfunc.a
+ifeq ($(findstring Linux, $(OSNAME)), Linux)
+    ifeq ($(findstring i686, $(OSTYPE)), i686)
+		RPATH = linux32
+	endif
 
-TARGET = ./test
+    ifeq ($(findstring x86_64, $(OSTYPE)), x86_64)
+		RPATH = linux64
+	endif
 
-all:$(LIB_TARGET) $(TARGET)
+	n = `cat /proc/cpuinfo | grep processor | wc -l`
+	MAKE_ARGS = -j $(n)
+	SYSLIB += -lrt -ldl
+endif
+
+# For Darwin
+ifeq ($(findstring Darwin, $(OSNAME)), Darwin)
+	RPATH = macos
+	SYSLIB +=  -rdynamic -L/usr/lib -liconv
+	LDFLAGS = -dynamiclib -shared
+endif
+
+LIB_TARGET = ../../dist/${RPATH}/libcluster.a
+
+all:$(LIB_TARGET) 
 
 lib:$(LIB_TARGET)
 
@@ -42,12 +62,7 @@ lib:$(LIB_TARGET)
 # $^: 表示所有依赖文件，编译器会自动将这个变量扩展为当前规则所有依赖的文件
 $(LIB_TARGET):$(LIB_OBJS)
 	$(AR) $(AFLAGS) $@ $^
-
-
-$(TARGET):$(EXE_OBJS) 
-	$(CPP) -o $@ $^  $(EXTLIBS) $(LDFLAGS) 
-
-# 
+ 
 .c.o:
 	$(CC) -c $(CFLAGS) $^ -o $@
 
@@ -55,4 +70,5 @@ $(TARGET):$(EXE_OBJS)
 	$(CPP) -c $(CFLAGS) $^ -o $@
 
 clean:
-	$(RM) $(LIB_TARGET) $(LIB_OBJS) $(TARGET) $(EXE_OBJS)
+	@echo $(OSNAME)
+	$(RM) $(LIB_TARGET) $(LIB_OBJS)
