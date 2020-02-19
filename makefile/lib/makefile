@@ -25,12 +25,6 @@ LDFLAGS +=  -lc
 # $(AR) $(AFLAGS) ar -r 生成静态库的命令
 AFLAGS += -r
 
-# 需要编译的文件（静态库）
-SRCPATH = ../src
-SOURCE += $(SRCPATH)/func.cpp
-LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
-
-
 ifeq ($(findstring Linux, $(OSNAME)), Linux)
     ifeq ($(findstring i686, $(OSTYPE)), i686)
 		RPATH = linux32
@@ -47,8 +41,15 @@ endif
 # For Darwin
 ifeq ($(findstring Darwin, $(OSNAME)), Darwin)
 	RPATH = macos
-	LDFLAGS = -dynamiclib -shared
+	CFLAGS += -dynamiclib -shared
 endif
+
+
+
+# 需要编译的文件（静态库）
+SRCPATH = ../src
+SOURCE += $(SRCPATH)/func.cpp
+LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 
 LIB_TARGET = ../dist/${RPATH}/libfunc.a
 
