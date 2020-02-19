@@ -6,10 +6,33 @@ CC = gcc
 RM = rm -f
 STRIP = strip
 
+# 系统信息
+OSNAME    = $(shell uname -s)
+OSTYPE    = $(shell uname -m)
+RPATH =
+
+ifeq ($(findstring Linux, $(OSNAME)), Linux)
+    ifeq ($(findstring i686, $(OSTYPE)), i686)
+		RPATH = linux32
+	endif
+
+    ifeq ($(findstring x86_64, $(OSTYPE)), x86_64)
+		RPATH = linux64
+	endif
+
+	n = `cat /proc/cpuinfo | grep processor | wc -l`
+	MAKE_ARGS = -j $(n)
+endif
+
+# For Darwin
+ifeq ($(findstring Darwin, $(OSNAME)), Darwin)
+	RPATH = macos
+endif
+
 # 头文件路径
 CFLAGS +=  -I../src
 # 第三方库
-EXTLIBS = 
+EXTLIBS = ../dist/${RPATH}/libfunc.a
 
 # 编译选项
 CFLAGS += -Wall -O2 -Os -g
@@ -20,12 +43,11 @@ LDFLAGS +=  -lc
 
 # 需要编译的文件 
 SRCPATH = ../src
-SOURCE += $(SRCPATH)/func.cpp
 SOURCE += $(SRCPATH)/main.cpp
 
 EXE_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 
-TARGET = ./test
+TARGET = ../dist/${RPATH}/test
 
 all:$(TARGET)
 

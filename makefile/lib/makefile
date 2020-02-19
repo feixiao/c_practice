@@ -26,8 +26,8 @@ LDFLAGS +=  -lc
 AFLAGS += -r
 
 # 需要编译的文件（静态库）
-SRCPATH = .
-SOURCE += $(SRCPATH)/service.cpp
+SRCPATH = ../src
+SOURCE += $(SRCPATH)/func.cpp
 LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
 
 
@@ -42,17 +42,15 @@ ifeq ($(findstring Linux, $(OSNAME)), Linux)
 
 	n = `cat /proc/cpuinfo | grep processor | wc -l`
 	MAKE_ARGS = -j $(n)
-	SYSLIB += -lrt -ldl
 endif
 
 # For Darwin
 ifeq ($(findstring Darwin, $(OSNAME)), Darwin)
 	RPATH = macos
-	SYSLIB +=  -rdynamic -L/usr/lib -liconv
 	LDFLAGS = -dynamiclib -shared
 endif
 
-LIB_TARGET = ../../dist/${RPATH}/libcluster.a
+LIB_TARGET = ../dist/${RPATH}/libfunc.a
 
 all:$(LIB_TARGET) 
 
