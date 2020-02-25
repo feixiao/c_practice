@@ -77,3 +77,4 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 endif()
 
 add_subdirectory(lib)
+add_subdirectory(exe)
