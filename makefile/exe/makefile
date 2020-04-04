@@ -29,8 +29,8 @@ TARGET = ./test
 
 all:$(TARGET)
 
-$(TARGET):$(EXE_OBJS) $(EXTLIBS)
-	$(CPP) -o $@ $^  $(LDFLAGS)
+$(TARGET):$(EXE_OBJS) 
+	$(CPP) -o $@ $^  $(LDFLAGS) $(EXTLIBS)
 
 # 
 .c.o:
