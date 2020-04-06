@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "chrono": "c",
-        "limits": "c",
-        "mutex": "c"
-    }
-}

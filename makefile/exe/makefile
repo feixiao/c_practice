@@ -54,6 +54,7 @@ all:$(TARGET)
 $(TARGET):$(EXE_OBJS) 
 	$(CPP) -o $@ $^  $(EXTLIBS) $(LDFLAGS)
 
+
 # 
 .c.o:
 	$(CC) -c $(CFLAGS) $^ -o $@
