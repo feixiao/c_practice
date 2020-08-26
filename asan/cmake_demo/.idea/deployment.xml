@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="172.20.99.19 (b82e2fa6-25db-4c23-ab52-9a73056cd76e)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Test-42 (1a15c603-345e-4695-a133-9e0c160558d1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="centos7+ (0f6f0de5-7a4a-49d8-aaa8-3836c2045087)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/cmake_demo" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="janus (8da8917d-b06e-4af2-928e-28277cf3de4b)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.mqn3BPbAlf" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-janus" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="test (6a60a228-7ef0-4948-9004-ced731e82221)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ubuntu (8730dfc0-5ee6-4213-9a4d-dbc075948d30)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
