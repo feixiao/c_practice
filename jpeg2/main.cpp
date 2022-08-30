@@ -8,6 +8,81 @@
 
 typedef unsigned char BYTE;
 
+
+/*
+ *	Descr: 读取jpeg文件的data内容（取出文件头信息）
+ *	@param input_filename ：jpeg文件路径（含文件名）输入
+ *	@param output_buffer ：返回指向数据地址的指针
+ *	@param
+ *	@Author :Libin
+ *	@return :成功返回0,失败返回-1
+*/
+int read_jpeg_file(const char *input_filename, char **output_buffer)
+{
+    struct jpeg_decompress_struct cinfo;
+    struct jpeg_error_mgr jerr;
+    FILE *input_file;
+    FILE *output_file;
+    JSAMPARRAY buffer;
+    int row_width;
+
+    unsigned char *rowdata = NULL;
+
+    cinfo.err = jpeg_std_error(&jerr);
+
+
+    if ((input_file = fopen(input_filename, "rb")) == NULL) {
+        fprintf(stderr, "can't open %s\n", input_filename);
+        return -1;
+    }
+
+
+    // 1、Initialization of JPEG compression objects
+    jpeg_create_decompress(&cinfo);
+
+    /* Specify data source for decompression */
+    jpeg_stdio_src(&cinfo, input_file);
+
+    /* 1.设置读取jpg文件头部，Read file header, set default decompression parameters */
+    (void) jpeg_read_header(&cinfo, TRUE);
+
+    /* 2.开始解码数据 Start decompressor */
+    (void) jpeg_start_decompress(&cinfo);
+
+    row_width = cinfo.output_width * cinfo.output_components;
+
+
+
+    /* 3.跳过读取的头文件字节Make a one-row-high sample array that will go away when done with image */
+    buffer = (*cinfo.mem->alloc_sarray)
+            ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_width, 1);
+
+    printf("Get image width:%d,height:%d\n",row_width,cinfo.output_height);
+    *output_buffer = (unsigned char *)malloc(row_width * cinfo.output_height);
+    memset(*output_buffer, 0, row_width * cinfo.output_height);
+    rowdata = *output_buffer;
+
+
+    /* 4.Process data由左上角从上到下行行扫描 */
+    while (cinfo.output_scanline < cinfo.output_height) {
+        (void) jpeg_read_scanlines(&cinfo, buffer, 1);
+
+        memcpy(rowdata, *buffer, row_width);
+        rowdata += row_width;
+    }
+
+    //free(output_buffer);
+    (void) jpeg_finish_decompress(&cinfo);
+    printf("Get iamge data ,buffer size=%d\n",strlen((const char* ) *output_buffer));
+    jpeg_destroy_decompress(&cinfo);
+
+    /* Close files, if we opened them */
+    fclose(input_file);
+
+    return 0;
+}
+
+
 bool CompressJPEG(
         /*IN*/BYTE *src, int width, int height, int depth,
         /*OUT*/BYTE **dst, unsigned long *dstLen
@@ -638,7 +713,7 @@ void test_decompress_from_file(std::string& sFile, std::string& dFile)
     // use raw image buffer
     // do work.
     compress_jpeg_to_file(
-            dst, width, height, channel, J_COLOR_SPACE::JCS_GRAYSCALE, 90,
+            dst, width, height, channel, color_space, 100,
             dFile.c_str()
     );
 
