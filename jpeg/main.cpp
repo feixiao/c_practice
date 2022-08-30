@@ -5,7 +5,6 @@
 
 #include "turbojpeg.h"
 
-// https://aijishu.com/a/1060000000078362
 
 typedef unsigned char BYTE;
 
@@ -188,7 +187,14 @@ void tj_decompress_gray_jpeg_from_file(
     // (0) read src memory buffer from file
     std::ifstream ifs(src_filename, std::ios_base::binary | std::ios_base::in);
     ifs.seekg(0, std::ios::end);
-    uint64_t srcLen = ifs.tellg();
+    int len = ifs.tellg();
+    printf("file len : %d\n", len);
+
+    if(len < 0) {
+        return ;
+    }
+
+    uint64_t srcLen = len;
     ifs.seekg(0, std::ios::beg);
 
     BYTE *src = new BYTE[srcLen];
@@ -211,7 +217,7 @@ void tj_decompress_gray_jpeg_from_file(
 }
 
 
-void test_compress()
+void test_compress(std::string& filename)
 {
     int width = 2000;
     int height = 1000;
@@ -231,17 +237,16 @@ void test_compress()
     //========================================================================
     // compress to file
     int quality = 90;
-    const char* filename = "../image/compress/tj_mem_to_file.jpg";
-    tj_compress_gray_jpeg_to_file(src, width, height, quality, filename);
+    tj_compress_gray_jpeg_to_file(src, width, height, quality, filename.c_str());
     //========================================================================
 
     delete[] src;
 }
 
-void test_decompress()
+void test_decompress(std::string& srcFile, std::string& dstFile)
 {
     // (0) create memory src buffer
-    char* src_filename = "../image/compress/to_file.jpg";
+    const char *src_filename = srcFile.c_str();
 
     // (2) decompress
     BYTE *dst = NULL; // allocated inside **decompress** function by new[].
@@ -262,7 +267,7 @@ void test_decompress()
     //========================================================================
     // compress to file
     int quality = 90;
-    const char* dst_filename = "../image/compress/tj_decompress_to_mem_to_file.jpg";
+    const char* dst_filename = dstFile.c_str();
     tj_compress_gray_jpeg_to_file(dst, width, height, quality, dst_filename);
     //========================================================================
 
@@ -321,15 +326,14 @@ void test_compress_time()
     delete[] src;
 }
 
-void test_decompress_time()
-{
 
-}
 
 int main(int argc, char* argv[])
 {
-    //test_compress();
-    //test_decompress();
-    test_compress_time();
+
+    std::string file("/Users/frank/workspace/github/c_practice/jpeg/image/test.jpg");
+    std::string file2("/Users/frank/workspace/github/c_practice/jpeg/image/new.jpeg");
+//    test_compress(file);
+    test_decompress(file,file2);
     return 0;
 }
