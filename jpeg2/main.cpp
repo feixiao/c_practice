@@ -8,6 +8,7 @@
 
 typedef unsigned char BYTE;
 
+// https://blog.51cto.com/u_15127510/4384916
 
 /*
  *	Descr: 读取jpeg文件的data内容（取出文件头信息）
