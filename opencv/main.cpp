@@ -34,19 +34,34 @@ bool Isequal(vector<Tuple> a, vector<Tuple> b)
 int main()
 {
 	srand(time(0));
- 
-	Mat src = imread("/Users/frank/workspace/github/c_practice/opencv/image/test.jpg"); //图片地址
-	imshow("input", src);
-	int width = src.cols;
+
+    // 图片地址
+	Mat src = imread("/Users/frank/workspace/github/c_practice/opencv/image/test.jpg", 1);
+    if (src.empty())
+    {
+        cout << "Error : Image cannot be loaded..!!" << endl;
+        return -1;
+    }
+    else
+    {
+        namedWindow("MyWindow", 0);
+        imshow("MyWindow", src);
+        waitKey(5000);
+    }
+
+
+    int width = src.cols;
 	int height = src.rows;
 	int dims = src.channels();
 	Tuple t;
-	//Kmeans//
+
+    // Kmeans
 	vector<Tuple> sum_points;
 	vector<Tuple> points;
 	int K = 6;
 	int temp_K = K;
-	//图中所点存入sum_points
+
+    // 图中所点存入sum_points
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
@@ -93,7 +108,6 @@ int main()
 				points[i].r = new_points[i].r;
 				points[i].g = new_points[i].g;
 			}
- 
 		}
 		
 		// 欧式距离判断并更新质心点位置
@@ -176,8 +190,9 @@ int main()
 		}
 	}
  
- 
-	imshow("kmeans-demo", result);
+
+    namedWindow("kmeans-demo", 0);
+    imshow("kmeans-demo", result);
 	waitKey(0);
  
 	return 0;
