@@ -2,7 +2,7 @@
 
 #### 安装
 ```shell
-brew install --build-from-source ninja
+brew install ninja
 ```
 
 
