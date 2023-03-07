@@ -51,7 +51,7 @@ int main ()
         }
     }
 
-    std::string src("Hello World....");
+    std::string src("12345678900987654321");
     Byte buf[1024] = {"\0"};
     uLong size = 1024;
     int ret = gzcompress((Byte*)src.c_str(), src.size(), buf, &size);
