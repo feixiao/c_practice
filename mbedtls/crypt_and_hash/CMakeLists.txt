@@ -19,6 +19,7 @@ set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 
 add_executable(${PROJECT_NAME} main.cpp )
-
+#add_executable(mbedtls_aes_raw main_raw.cpp )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE  z /usr/local/lib/libmbedcrypto.a)
+#target_link_libraries(mbedtls_aes_raw PRIVATE  z /usr/local/lib/libmbedcrypto.a)

@@ -51,6 +51,8 @@
 #define MODE_ENCRYPT    0
 #define MODE_DECRYPT    1
 
+// https://github.com/Mbed-TLS/mbedtls/blob/v3.3.0/programs/aes/crypt_and_hash.c
+
 #define USAGE   \
     "\n  crypt_and_hash <mode> <input filename> <output filename> <cipher> <mbedtls_md> <key>\n" \
     "\n   <mode>: 0 = encrypt, 1 = decrypt\n" \
