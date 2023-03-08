@@ -25,21 +25,14 @@ Encryptor::Encryptor() : m_encrypt(true)
 int Encryptor::initialize( bool encrypt, unsigned char*key )
 {
     int ret = 0;
-    // printf(
-    //     "ecall_dispatcher::initialize : %s request\n",
-    //     encrypt ? "encrypting" : "decrypting\n");
 
     m_encrypt = encrypt;
-    memset((void*)m_encryption_key, 0, ENCRYPTION_KEY_SIZE_IN_BYTES);
-    
-    printf("copy encryption key\n");
- 
+    memset((void*)m_encryption_key, 0, ENCRYPTION_KEY_SIZE_IN_BYTES); 
     memcpy(m_encryption_key,key,ENCRYPTION_KEY_SIZE_IN_BYTES);
 
     // initialize aes context
     mbedtls_aes_init(&m_aescontext);
 
-    // set aes key
     if (encrypt)
         ret = mbedtls_aes_setkey_enc(
             &m_aescontext, m_encryption_key, ENCRYPTION_KEY_SIZE);
@@ -66,8 +59,10 @@ int Encryptor::encrypt_block(
     size_t *out_data_len)
 {
     unsigned char output[1024] = {0};
-    unsigned char* output_data = (unsigned char*)malloc(ENCRYPTION_KEY_SIZE_IN_BYTES);
+    unsigned char* output_data = (unsigned char*)malloc(1024); // 不能定义为数组，strlen
+    memset(output_data, 0, 1024);
     unsigned char input_str[1024]={0};
+
 
     memcpy(input_str,input_buf,size);
 
