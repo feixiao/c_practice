@@ -130,6 +130,7 @@ int main( int argc, char *argv[] )
         goto exit;
     }
 
+    // 解密或者解密
     mode = atoi( argv[1] );
 
     if( mode != MODE_ENCRYPT && mode != MODE_DECRYPT )
@@ -163,6 +164,8 @@ int main( int argc, char *argv[] )
     /*
      * Read the Cipher and MD from the command line
      */
+
+    // AES-128-CBC
     cipher_info = mbedtls_cipher_info_from_string( argv[4] );
     if( cipher_info == NULL )
     {
@@ -175,6 +178,7 @@ int main( int argc, char *argv[] )
         goto exit;
     }
 
+    // SHA1
     md_info = mbedtls_md_info_from_string( argv[5] );
     if( md_info == NULL )
     {
