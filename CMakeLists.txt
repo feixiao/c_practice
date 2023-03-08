@@ -4,3 +4,4 @@ project(test VERSION 0.1.0)
 
 add_subdirectory(aes)
 add_subdirectory(mbedtls/crypt_and_hash)
+add_subdirectory(mbedtls/padding)

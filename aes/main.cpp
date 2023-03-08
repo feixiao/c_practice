@@ -15,11 +15,11 @@ int main () {
 
     std::string text("一个普通的山村穷小子，偶然之下，跨入到一个江湖小门派，虽然资质平庸，但依靠自身努力和合理算计最后修炼成仙的故事。");
 
-    // text = text.substr(0,15);
+    text = text.substr(0,16);
     unsigned char * output_buf = nullptr;
     size_t out_data_len = 0;
 
-    // padding对于数据流有问题
+    // 一次性全部输入，而不是对整个流分块加密,这样导致padding数据偏多
     ret = e1.encrypt_block(true, (unsigned char*)text.c_str(), &output_buf, (size_t)text.size(), &out_data_len);
     if(ret != 0) {
         printf("encrypt_block failed, ret = %d\n", ret);
