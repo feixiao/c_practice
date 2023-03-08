@@ -80,6 +80,7 @@ int Encryptor::encrypt_block(
 	    input_str[enc_len+pad-1] = pad+1;//assign the value "pad+1" to the end
 	    enc_len += pad;
 
+        printf("pad : %d , enc_len : %d \n", pad, enc_len);
         int ret = 0;
 	    ret = mbedtls_aes_crypt_cbc( &m_aescontext,
                         MBEDTLS_AES_ENCRYPT,
@@ -91,9 +92,15 @@ int Encryptor::encrypt_block(
         {
                 printf("mbedtls_aes_crypt_cbc failed with %d", ret);
         } else {
-                memcpy(output_data,output,strlen((const char*)output));
+                // memcpy(output_data,output,strlen((const char*)output));
+		        // *output_buf = output_data;
+                // *out_data_len = (int) strlen((const char*)output);
+
+                memcpy(output_data,output,enc_len);
 		        *output_buf = output_data;
-                *out_data_len = (int) strlen((const char*)output);
+                *out_data_len = enc_len;
+
+                printf("pad : %d , enc_len : %d , out_data_len : %d\n", pad, enc_len, *out_data_len);
 		/*
 		//decryption - test only
     		unsigned char output2[128] = {0};
