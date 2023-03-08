@@ -18,6 +18,8 @@ int main () {
     // text = text.substr(0,15);
     unsigned char * output_buf = nullptr;
     size_t out_data_len = 0;
+
+    // padding对于数据流有问题
     ret = e1.encrypt_block(true, (unsigned char*)text.c_str(), &output_buf, (size_t)text.size(), &out_data_len);
     if(ret != 0) {
         printf("encrypt_block failed, ret = %d\n", ret);
