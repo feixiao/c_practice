@@ -13,9 +13,10 @@ int main () {
         return -1;
     }
 
-    std::string text("一个普通的山村穷小子，偶然之下，跨入到一个江湖小门派，虽然资质平庸，但依靠自身努力和合理算计最后修炼成仙的故事。");
+    //std::string text("一个普通的山村穷小子，偶然之下，跨入到一个江湖小门派，虽然资质平庸，但依靠自身努力和合理算计最后修炼成仙的故事。");
 
-    text = text.substr(0,16);
+    // std::string text("12345678");
+    std::string text("123456788765432");
     unsigned char * output_buf = nullptr;
     size_t out_data_len = 0;
 
@@ -41,6 +42,6 @@ int main () {
         return -1;
     }
 
-    printf("output_buf2 : %s \n", output_buf2);
+    printf("output_buf2 : %s , size : %d\n", output_buf2, strlen((char*)output_buf2));
     return 0;
 }

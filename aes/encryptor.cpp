@@ -73,14 +73,13 @@ int Encryptor::encrypt_block(
 
     if(encrypt==MBEDTLS_AES_ENCRYPT){
         // pad to multiple of 16 for AES
-        size_t enc_len = size + 1;  // add a byte (after the padding zeros) to hold the number of padbytes needed
+        size_t enc_len = size;      // add a byte (after the padding zeros) to hold the number of padbytes needed
         int pad = 16 - (enc_len % 16);
-        pad = (pad==16)?0:pad;
-        memset(input_str+size,0,pad);//pad 0 from input_str[size] to the end
-	    input_str[enc_len+pad-1] = pad+1;//assign the value "pad+1" to the end
-	    enc_len += pad;
+        memset(input_str+size,pad,pad);     //  填充需要pad的数据内容到最后
+	    
+        enc_len += pad;
 
-        printf("input : %d , pad : %d , enc_len : %d \n", size, pad, enc_len);
+        printf("input %s , size: %d , pad : %d , enc_len : %d \n", input_buf, size, pad, enc_len);
         int ret = 0;
 	    ret = mbedtls_aes_crypt_cbc( &m_aescontext,
                         MBEDTLS_AES_ENCRYPT,
@@ -100,17 +99,10 @@ int Encryptor::encrypt_block(
 		        *output_buf = output_data;
                 *out_data_len = enc_len;
 
-                printf("pad : %d , enc_len : %d , out_data_len : %d\n", pad, enc_len, *out_data_len);
-		/*
-		//decryption - test only
-    		unsigned char output2[128] = {0};
-		mbedtls_aes_setkey_dec( &m_aescontext, m_encryption_key, ENCRYPTION_KEY_SIZE );
-    		mbedtls_aes_crypt_cbc( &m_aescontext, MBEDTLS_AES_DECRYPT, strlen((const char*)output), m_operating_iv, output, output2 );
-    		unsigned char* output_data = (unsigned char*)oe_host_malloc(16);
-        	memcpy(output_data,output2,strlen((const char*)output2));
-       		*output_buf = output_data;
-       		*out_data_len = (int)strlen((const char*)output2);*/
-	}
+                printf("pad : %d , enc_len : %d , out_data_len : %d, strlen : %d\n",
+                     pad, enc_len, *out_data_len, strlen((char*)*output_buf));
+
+	    }
     } else { //decryption
         int ret=0;
         ret = mbedtls_aes_crypt_cbc( &m_aescontext,
@@ -124,11 +116,14 @@ int Encryptor::encrypt_block(
         {
                 printf("mbedtls_aes_crypt_cbc failed with %d", ret);
         } else {
+
+            int len = strlen((char*)output_data);
+            int pad =  output_data[len - 1];
+
+            // remove padding
+            memset(output_data + len - pad, 0, pad);
 		    *output_buf = output_data;
-		    *out_data_len = strlen((const char*)m_encryption_key);
-		    // remove padding
-    		if(size >= output_data[size-1])
-        	     *out_data_len = size - output_data[size-1];
+		    *out_data_len = len - pad;
         }
     }
     return 0;
