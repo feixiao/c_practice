@@ -80,7 +80,7 @@ int Encryptor::encrypt_block(
 	    input_str[enc_len+pad-1] = pad+1;//assign the value "pad+1" to the end
 	    enc_len += pad;
 
-        printf("pad : %d , enc_len : %d \n", pad, enc_len);
+        printf("input : %d , pad : %d , enc_len : %d \n", size, pad, enc_len);
         int ret = 0;
 	    ret = mbedtls_aes_crypt_cbc( &m_aescontext,
                         MBEDTLS_AES_ENCRYPT,
