@@ -25,8 +25,16 @@ public:
         }
         else
         {
-            cv_.wait(lock, [this]
-                     { return count_ == 0; });
+            // cv_.wait(lock, [this]
+            //          { return count_ == 0; });
+
+            bool result = cv_.wait_for(lock, std::chrono::milliseconds(5000),
+                                       [this]
+                                       { return count_ == 0; });
+            if (!result)
+            {
+                count_ = 0; // 重置计数器
+            }
         }
     }
 
@@ -38,15 +46,20 @@ private:
 };
 
 const int kNumThreads = 4;
-const int kNumTasks = 10;
+const int kNumTasks = 2;
 
 Barrier barrier(kNumThreads);
 
+std::mutex gMutex;
+// 具体地，每个线程执行kNumTasks个任务，每个任务的编号从0到kNumTasks - 1。当线程完成一个任务后，它会在Barrier处等待其他线程完成同样的任务。
 void worker(int id)
 {
     for (int i = 0; i < kNumTasks; ++i)
     {
+        gMutex.lock();
         std::cout << "Thread " << id << " is working on task " << i << std::endl;
+        gMutex.unlock();
+
         // 模拟计算工作
         for (int j = 0; j < 100000000; ++j)
         {
