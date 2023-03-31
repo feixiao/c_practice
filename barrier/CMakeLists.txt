@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(barrier_demo)
 
+include_directories(${CMAKE_OSX_SYSROOT}/usr/include)
 
 # 添加可执行文件
 add_executable(barrier_demo main.cpp)
