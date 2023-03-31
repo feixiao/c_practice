@@ -3,6 +3,7 @@ project(test VERSION 0.1.0)
 
 
 
+set(CMAKE_CXX_STANDARD 11)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     #	add_definitions("-Wno-invalid-source-encoding")
@@ -28,5 +29,5 @@ endif ()
 add_subdirectory(aes)
 add_subdirectory(mbedtls/crypt_and_hash)
 add_subdirectory(mbedtls/padding)
-add_subdirectory(barrier)
+#add_subdirectory(barrier)
 add_subdirectory(barrier_cpp11)
