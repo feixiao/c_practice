@@ -23,7 +23,7 @@ add_definitions(
     "-std=c++11"
 )
 
-set(lib_output_path ${CMAKE_CURRENT_SOURCE_DIR}/libs/android/${ANDROID_ABI})
+set(lib_output_path ${CMAKE_CURRENT_SOURCE_DIR}/../libs/android/${ANDROID_ABI})
 set(LIBRARY_OUTPUT_PATH ${lib_output_path})
 
 

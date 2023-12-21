@@ -13,6 +13,9 @@ add_subdirectory(module)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/module)
 
+
+set()
+
 # 生成可执行文件
 add_executable(${TARGET_NAME}
                 main.cpp
@@ -20,7 +23,5 @@ add_executable(${TARGET_NAME}
 
 
 target_link_libraries(${TARGET_NAME} PRIVATE 
-
-        ${CMAKE_CURRENT_SOURCE_DIR}/module/libs/android/${ANDROID_ABI}/libadd.a
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/libs/android/${ANDROID_ABI}/libadd.a
         )
