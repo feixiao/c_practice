@@ -10,11 +10,9 @@ set(TARGET_NAME helloworld)
 
 add_subdirectory(module)
 
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/module)
 
 
-set()
 
 # 生成可执行文件
 add_executable(${TARGET_NAME}
