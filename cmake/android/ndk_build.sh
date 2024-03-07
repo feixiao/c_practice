@@ -1,12 +1,14 @@
 #!/bin/bash
 
-export ANDROID_NDK=/Users/frank/android/ndk/android-ndk-r18b
+#export ANDROID_NDK=/Users/frank/android/ndk/android-ndk-r18b
+export ANDROID_NDK=/home/frank/android/ndk/android-ndk-r20b
 
 # For Ubuntu
-#export PATH=${PATH}:${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin
+export PATH=${PATH}:${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin
 
 # For OSX
-export PATH=${PATH}:${ANDROID_NDK}/toolchains/llvm/prebuilt/darwin-x86_64/bin
+# export PATH=${PATH}:${ANDROID_NDK}/toolchains/llvm/prebuilt/darwin-x86_64/bin
+
 rm -r android_build
 mkdir android_build && cd android_build
 
