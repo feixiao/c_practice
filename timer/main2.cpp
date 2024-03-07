@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <chrono>
 #include <condition_variable>
 #include <functional>
@@ -8,8 +5,6 @@
 #include <mutex>
 #include <thread>
 #include <vector>
-
-#include "timer.h"
 
 class Timer {
  public:
@@ -59,6 +54,8 @@ class Timer {
   std::condition_variable cv_;
 };
 
+//
+// g++ --std=c++11 -o main2 main2.cpp
 int main() {
   Timer timer;
 
@@ -70,24 +67,5 @@ int main() {
   std::this_thread::sleep_for(std::chrono::seconds(10));
   timer.stop();
 
-  return 0;
-}
-
-// g++ --std=c++11 -o main main.cpp
-int main() {
-  Timer timer;
-  timer.start(200, []() {
-    // 获取当前时间点
-    auto now = std::chrono::system_clock::now();
-
-    // 将时间点转换为时间戳（以毫秒为单位）
-    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-                         now.time_since_epoch())
-                         .count();
-
-    std::cout << timestamp << " Hello, world!" << std::endl;
-  });
-  std::this_thread::sleep_for(std::chrono::seconds(5000));
-  timer.stop();
   return 0;
 }
