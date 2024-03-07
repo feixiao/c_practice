@@ -35,8 +35,8 @@ ifeq ($(findstring HAS_LIBICONV, $(FLAGS)), HAS_LIBICONV)
 endif
 
 ifeq ($(findstring clang++, $(CC)), clang++)
-	CFLAGS += -Wno-invalid-source-encoding \
-		  -Wno-extended-offsetof
+	CFLAGS += -Wno-invalid-source-encoding 
+	#		  -Wno-extended-offsetof
 endif
 
 # For FreeBSD
@@ -48,8 +48,8 @@ endif
 
 # For Darwin
 ifeq ($(findstring Darwin, $(UNIXNAME)), Darwin)
-	CFLAGS += -DMACOSX -Wno-invalid-source-encoding \
-		  -Wno-extended-offsetof
+	CFLAGS += -DMACOSX -Wno-invalid-source-encoding
+	# -Wno-extended-offsetof
 	SYSLIB +=  -rdynamic
 	UNIXTYPE = MACOSX
 	RPATH = macos

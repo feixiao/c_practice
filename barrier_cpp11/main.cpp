@@ -84,5 +84,7 @@ int main()
         t.join();
     }
 
+    std::cout << "work done." << std::endl;
+
     return 0;
 }
