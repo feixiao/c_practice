@@ -3,6 +3,8 @@ project(cmake_demo)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# set(CMAKE_CXX_COMPILER "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++")
+
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 
@@ -16,8 +18,8 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     #    MACOSX_DEPLOYMENT_TARGET=10.7
     #
     #cmake -G "Unix Makefiles" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.7.sdk/ -DCMAKE_OSX_DEPLOYMENT_TARGET=10.7 ../..
-    # set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk")
-    # set(CMAKE_CXX_FLAGS "--sysroot ${CMAKE_OSX_SYSROOT} ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk")
+    set(CMAKE_CXX_FLAGS "--sysroot ${CMAKE_OSX_SYSROOT} ${CMAKE_CXX_FLAGS}")
 
     # https://stackoverflow.com/questions/69803659/what-is-the-proper-way-to-build-for-macos-x86-64-using-cmake-on-apple-m1-arm
     set(CMAKE_OSX_ARCHITECTURES "x86_64")
