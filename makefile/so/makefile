@@ -11,11 +11,11 @@ CFLAGS += -I ../src
 EXTLIBS = -L./ -lfunc
 
 # 编译选项
-CFLAGS += -Wall -O2 -Os -g -fPIC
+CFLAGS += -Wall -O2 -Os -g -fPIC -flto -W
 
 # 系统库
 LDFLAGS +=  -lc 
-
+LIBDIR = ./
 SRCPATH = ../src
 SOURCE += $(SRCPATH)/func.cpp
 LIB_OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
@@ -33,11 +33,11 @@ all:$(LIB_TARGET) $(TARGET)
 lib:$(LIB_TARGET)
 
 $(LIB_TARGET):$(LIB_OBJS)
-	$(CPP) -shared -o $@ $(LIB_OBJS) $(LDFLAGS)   
+	$(CPP) -shared -Wl,-soname,libfunc.so -o $@ $(LIB_OBJS) $(LDFLAGS)   
 
 
 $(TARGET):$(EXE_OBJS) 
-	$(CPP) -o $@ $^  $(EXTLIBS) $(LDFLAGS) 
+	$(CPP) $(EXTLIBS) $(LDFLAGS)  -L${LIBDIR}  -Wl,-rpath,${LIBDIR} -o $@ $^  -lfunc
 
 
 .c.o:
