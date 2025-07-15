@@ -1,2 +1,5 @@
 /jpeg2/cmake-build-debug/
 build
+.DS_Store
+*.o
+*.so
